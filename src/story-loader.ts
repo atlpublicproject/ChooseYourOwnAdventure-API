@@ -17,7 +17,7 @@ export class StoryLoader {
         let loader = new _StoryLoader();
         StoryLoader.StoryMap = loader.LoadAllStories();
         StoryLoader.AllStories = _.values(StoryLoader.StoryMap);
-        StoryLoader.Headers = StoryLoader.AllStories.map( (s) => s.cover );
+        StoryLoader.Headers = StoryLoader.AllStories.map( (s) =>  StoryLoader.toHeader(s) );
     }
 
     static Slugify(str: string): string {
@@ -44,12 +44,12 @@ export class StoryLoader {
         let getPages = ( p : Page ) => { if (p.buttons == null || p.buttons.length == 0) return null;
                                          else return p.buttons.filter( b => b.length > 0).map( b => new Number(b[1]) as number ) };
 
-        let done = {};
+        let done : any = {};
 
-        let endings = {};
-        let endPathLength = [];
-        let loops = {};
-        let merges = {};
+        let endings  : any  = {};
+        let endPathLength = Array<number>();
+        let loops : any  = {};
+        let merges : any = {};
         
         function walk( pageNum : number, prevPageNum: number, pathLength: number, mergeWalk : boolean ){
 
@@ -95,14 +95,14 @@ export class StoryLoader {
 
         console.log( JSON.stringify(loops, null, 4 ));
 
-        let completeCount = _.keys(endings).length;
+        let completeCount : number = _.keys(endings).length;
 
-        let loopbackCount = _.values(loops).reduce( (sum:number, val) => sum + val , 0 );
-        let convergeCount = _.values(merges).reduce( (sum:number, val) => sum + val , 0 );
+        let loopbackCount : number = _.values(loops).reduce( (sum:number, val:number) => sum + val , 0 );
+        let convergeCount : number = _.values(merges).reduce( (sum:number, val:number) => sum + val , 0 );
 
-        let avgPath = -1;
+        let avgPath  : number = -1;
         if ( endPathLength.length > 0)
-            avgPath = endPathLength.reduce( (sum : number, val) => { return sum + val; }, 0 ) / endPathLength.length;
+            avgPath = endPathLength.reduce( (sum : number, val : number) => { return sum + val; }, 0 ) / endPathLength.length;
 
         // todo :
         // change to qualitative measures
@@ -169,18 +169,18 @@ class _StoryLoader {
     }
 
     /*** loads a single story **/
-    LoadStory(folder): Story {
+    LoadStory(folder : string): Story {
 
         let s = new Story();
 
         // if error then skip story
         try {
 
-            var dirPath = (file) => { return path.join(this.storiesFolder, folder, file); };
+            var dirPath = (file : string) => { return path.join(this.storiesFolder, folder, file); };
 
             var metadata = dirPath('metadata.yaml');
 
-            var pages = [];
+            var pages = new Array<string>();
             var i = 1;
             while (fs.existsSync(dirPath(`pages-part-${i}.json`))) {
                 pages.push(dirPath(`pages-part-${i}.json`));
@@ -189,7 +189,7 @@ class _StoryLoader {
 
             this.LoadMetaData(s, metadata);
             this.LoadPages(s, pages);
-            this.AddCover(s);
+            //this.AddCover(s);
         } catch (e) {
 
             console.log(`Unable to load story from folder ${folder} : ` + e);
@@ -229,7 +229,7 @@ class _StoryLoader {
             //map to pages..        
             //: { [pageNumber: number]: Page } = {};
             let pages =
-                _.mapObject(pagesJson, function (val, key) {
+                _.mapObject(pagesJson, function(val :any, key : any) {
                     let page = new Page();
                     page.buttons = val['buttons'] as string[][];
                     page.image = val['image'] as string;
@@ -250,7 +250,7 @@ class _StoryLoader {
             return;
 
         let placeholders: { [variable: string]: Placeholder } = {};
-        _.each(inputArrays, function (a) {
+        _.each(inputArrays, function ( a : string[] ) {
             var p = new Placeholder();
             p.value = '';
             p.description = a[1];
@@ -260,9 +260,9 @@ class _StoryLoader {
         story.placeholders = placeholders;
     }
 
-    AddCover(story : Story){
-        story.cover = StoryLoader.toHeader(story);
-    }
+    // AddCover(story : Story){
+    //     story.cover = StoryLoader.toHeader(story);
+    // }
 
 
 }

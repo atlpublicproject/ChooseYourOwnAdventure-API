@@ -4,7 +4,8 @@
         "sourceMap": false,
         "types": [
             "node"
-        ]
+        ],
+        "target" : "es6"
     },
     "files" : [
         "./src/server.ts"

@@ -1,23 +1,24 @@
 var koa = require('koa');
-var router = require('koa-router')(); //routing lib
+var router = require('koa-router')();
 var Boom = require('boom');
 var fs = require('fs');
 var cors = require('koa-cors');
 
-var loader = require('./src/story-loader');
 
+const storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
+
+import { StoryLoader } from './story-loader';
+ 
 var app = koa();
 app.use(cors({
   'Access-Control-Allow-Origin': 'http://localhost:9000/'
 }));
 
-const storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
-
 
 //on start, load stories
-loader.StoryLoader.LoadStories();
-STORY_MAP = loader.StoryLoader.StoryMap;
-STORY_HEADERS = loader.StoryLoader.Headers;
+StoryLoader.LoadStories();
+var STORY_MAP : any  =  StoryLoader.StoryMap;
+var STORY_HEADERS : any = StoryLoader.Headers;
 
 
 router.get('image', '/i/:folder_slug/:image', function*( next ){

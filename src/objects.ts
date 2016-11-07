@@ -11,8 +11,8 @@ export class Story{
 
   /*** hashmap of all state */
   placeholders : { [variable : string ] : Placeholder };
-
 }
+
 
 export class Page{
   text : string;

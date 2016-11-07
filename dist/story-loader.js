@@ -11,7 +11,7 @@ var StoryLoader = (function () {
         var loader = new _StoryLoader();
         StoryLoader.StoryMap = loader.LoadAllStories();
         StoryLoader.AllStories = _.values(StoryLoader.StoryMap);
-        StoryLoader.Headers = StoryLoader.AllStories.map(function (s) { return s.cover; });
+        StoryLoader.Headers = StoryLoader.AllStories.map(function (s) { return StoryLoader.toHeader(s); });
     };
     StoryLoader.Slugify = function (str) {
         return str.replace(/ /g, '-').toLowerCase();
@@ -37,7 +37,7 @@ var StoryLoader = (function () {
         };
         var done = {};
         var endings = {};
-        var endPathLength = [];
+        var endPathLength = Array();
         var loops = {};
         var merges = {};
         function walk(pageNum, prevPageNum, pathLength, mergeWalk) {
@@ -134,7 +134,7 @@ var _StoryLoader = (function () {
         try {
             var dirPath = function (file) { return path.join(_this.storiesFolder, folder, file); };
             var metadata = dirPath('metadata.yaml');
-            var pages = [];
+            var pages = new Array();
             var i = 1;
             while (fs.existsSync(dirPath("pages-part-" + i + ".json"))) {
                 pages.push(dirPath("pages-part-" + i + ".json"));
@@ -142,7 +142,6 @@ var _StoryLoader = (function () {
             }
             this.LoadMetaData(s, metadata);
             this.LoadPages(s, pages);
-            this.AddCover(s);
         }
         catch (e) {
             console.log(("Unable to load story from folder " + folder + " : ") + e);
@@ -194,9 +193,6 @@ var _StoryLoader = (function () {
             placeholders[a[0]] = p;
         });
         story.placeholders = placeholders;
-    };
-    _StoryLoader.prototype.AddCover = function (story) {
-        story.cover = StoryLoader.toHeader(story);
     };
     return _StoryLoader;
 }());
