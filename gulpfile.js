@@ -3,7 +3,7 @@ var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var ts = require('gulp-typescript');
 var spawn = require('child_process').spawn;
-
+var clean = require('gulp-clean');
 
 gulp.task('default', ['build','watch'], function() {
   //spawn('node', ['dist/app.js'], { stdio: 'inherit' });
@@ -23,9 +23,10 @@ gulp.task('build', function () {
         .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('clean', function() {
-//   return del.sync('built');
-// })
+gulp.task('clean', function() {
+    return gulp.src('dist', {read: false})
+        .pipe(clean());
+})
 
 
 // gulp.task('browserSync', function() {

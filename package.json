@@ -16,9 +16,10 @@
     "@types/node": "^6.0.46",
     "browser-sync": "^2.17.5",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
     "gulp-ignore": "^2.0.1",
     "gulp-typescript": "^3.1.2",
-    "run-sequence": "^1.2.2"    
+    "run-sequence": "^1.2.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
