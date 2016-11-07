@@ -142,8 +142,8 @@ class _StoryLoader {
         let folders = fs.readdirSync(this.storiesFolder);
 
 
-        folders.forEach(folder => {
-            if (folder != "__Server") {
+        folders.forEach(folder => {            
+            if (folder != ".git" && folder !=".gitignore" && folder!="README.md") {
 
                 //storyFolderPaths.push(  file );
                 let myStory = this.LoadStory(folder);

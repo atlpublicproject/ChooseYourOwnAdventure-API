@@ -5,34 +5,28 @@ var ts = require('gulp-typescript');
 var spawn = require('child_process').spawn;
 var clean = require('gulp-clean');
 
-gulp.task('default', ['build','watch'], function() {
-  //spawn('node', ['dist/app.js'], { stdio: 'inherit' });
-  console.log("command 'run' executed");
+var tsProject = ts.createProject('./tsconfig.json',{});
+
+gulp.task('default', ['build','watch','run'], function() {
 });
+
+gulp.task('run', function(){
+     spawn('node', ['./dist/app.js'], { stdio: 'inherit' });
+})
 
 gulp.task('watch', function() {
     gulp.watch(['./src/*.ts'], ['build']);
 });
  
 gulp.task('build', function () {
-    return gulp.src(['./src/story-loader.ts'])
-        .pipe(ts({
-            noImplicitAny: false
-            //,out: 'app.js'
-        }))
-        .pipe(gulp.dest('dist'));
+
+      var tsResult = tsProject.src() // instead of gulp.src(...)
+        .pipe(tsProject());
+
+    return tsResult.js.pipe(gulp.dest('./dist'));   
 });
 
 gulp.task('clean', function() {
     return gulp.src('dist', {read: false})
         .pipe(clean());
 })
-
-
-// gulp.task('browserSync', function() {
-//   browserSync.init({
-//     server: {
-//       baseDir: 'dist'
-//     },
-//   })
-// })

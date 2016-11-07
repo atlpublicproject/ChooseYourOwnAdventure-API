@@ -4,16 +4,21 @@
   "description": "Sample game based on NY code design academy workshop",
   "main": "server.js",
   "dependencies": {
+    "@types/js-yaml": "^3.5.28",
+    "@types/node": "^6.0.46",
+    "@types/underscore": "^1.7.33",
     "boom": "^4.2.0",
     "httpdispatcher": "^1.0.0",
+    "js-yaml": "^3.6.1",
     "koa": "^1.2.4",
     "koa-router": "^5.4.0",
     "koa-send": "^3.2.0",
-    "js-yaml": "^3.6.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "@types/node": "^6.0.46",
+    "@types/underscore": "^1.7.33",
+    "@types/js-yaml": "^3.5.28",
     "browser-sync": "^2.17.5",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",

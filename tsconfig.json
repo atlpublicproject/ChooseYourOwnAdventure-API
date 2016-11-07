@@ -2,16 +2,12 @@
     "compilerOptions": {
         "module": "commonjs",
         "sourceMap": false,
-        "types": [
-            "node","js-yaml", "underscore"
-        ],
-        "target" : "es6"
+        "typeRoots": [ "./node_modules/@types/" ],
+        "target" : "es2015",
+        "outDir":  "./dist"
     },
-    "files" : [
-        "./src/**/*"
-    ],
     "include": [
-        "src/**/*"
+        "./src/**/*.ts"
     ],
     "exclude": [
         "node_modules",

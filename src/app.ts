@@ -1,3 +1,5 @@
+import { StoryLoader } from './story-loader';
+
 var koa = require('koa');
 var router = require('koa-router')();
 var Boom = require('boom');
@@ -7,7 +9,6 @@ var cors = require('koa-cors');
 
 const storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
 
-import { StoryLoader } from './story-loader';
  
 var app = koa();
 app.use(cors({
@@ -57,21 +58,22 @@ router.get('browse', '/b/browse', function*( next ){
 
 
 // x-response-time
-app.use(function *(next){
-  var start = new Date;
-  yield next;
-  var ms = new Date - start;
-  this.set('X-Response-Time', ms + 'ms');
-});
+// app.use(function *(next){
+//   var start : Date = new Date;
+//   yield next;
 
+//   let ms : number = 0;
+//   ms = ( new Date - start );
+//   this.set('X-Response-Time', ms + 'ms');
+// });
 // logger
 
-app.use(function *(next){
-  var start = new Date;
-  yield next;
-  var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
-});
+// app.use(function *(next){
+//   var start = new Date;
+//   yield next;
+//   var ms = new Date - start;
+//   console.log('%s %s - %s', this.method, this.url, ms);
+// });
 
 // response
 app.use(router.routes());
@@ -94,7 +96,7 @@ console.log("listening on port 3000");
 
 
 /*** function read file */
-var readFileThunk = function(src) {
+function readFileThunk(src) {
   return new Promise(function (resolve, reject) {
     fs.readFile(src, function (err, data) {
       if(err) return reject(err);
