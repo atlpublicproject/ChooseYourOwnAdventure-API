@@ -11,13 +11,13 @@ gulp.task('default', ['build','watch'], function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(['./src/*.ts','!./src/typings/**'], ['build']);
+    gulp.watch(['./src/*.ts'], ['build']);
 });
  
 gulp.task('build', function () {
-    return gulp.src('src/story-loader.ts')
+    return gulp.src(['./src/story-loader.ts'])
         .pipe(ts({
-            noImplicitAny: true
+            noImplicitAny: false
             //,out: 'app.js'
         }))
         .pipe(gulp.dest('dist'));

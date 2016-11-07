@@ -3,15 +3,14 @@
         "module": "commonjs",
         "sourceMap": false,
         "types": [
-            "node"
+            "node","js-yaml", "underscore"
         ],
         "target" : "es6"
     },
     "files" : [
-        "./src/server.ts"
+        "./src/**/*"
     ],
     "include": [
-        //"**/*",
         "src/**/*"
     ],
     "exclude": [
