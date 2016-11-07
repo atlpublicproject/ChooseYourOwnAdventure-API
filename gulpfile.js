@@ -6,16 +6,23 @@ var spawn = require('child_process').spawn;
 var clean = require('gulp-clean');
 
 var tsProject = ts.createProject('./tsconfig.json',{});
+var node;
 
-gulp.task('default', ['build','watch','run'], function() {
+gulp.task('default', ['build','watch','serve'], function() {
 });
 
-gulp.task('run', function(){
-     spawn('node', ['./dist/app.js'], { stdio: 'inherit' });
+gulp.task('serve', function(){
+     if (node) node.kill()
+     node = spawn('node', ['./dist/app.js'], { stdio: 'inherit' });
+     node.on('close', function (code) {
+        if (code === 8) {
+            gulp.log('Error detected, waiting for changes...');
+        }
+    });
 })
 
 gulp.task('watch', function() {
-    gulp.watch(['./src/*.ts'], ['build']);
+    gulp.watch(['./src/*.ts'], ['build','serve']);
 });
  
 gulp.task('build', function () {

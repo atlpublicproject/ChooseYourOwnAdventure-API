@@ -5,6 +5,7 @@ var router = require('koa-router')();
 var Boom = require('boom');
 var fs = require('fs');
 var cors = require('koa-cors');
+var path = require('path');
 
 
 const storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
@@ -28,7 +29,8 @@ router.get('image', '/i/:folder_slug/:image', function*( next ){
     var folder = this.params.folder_slug.replace('-',' ');
     var image = this.params.image;
 
-    var path = storiesFolder + '\\' + folder +  '\\images\\' + image;
+    var imgPath =  path.join(storiesFolder, folder, 'images', image);
+    //storiesFolder + '\\' + folder +  '\\images\\' + image;
     
     //get extension from request
     var li = image.lastIndexOf('.');
@@ -36,11 +38,11 @@ router.get('image', '/i/:folder_slug/:image', function*( next ){
 
     this.type = ext;
 
-    console.log ( path );
-    this.body = yield readFileThunk( path );
+    console.log ( imgPath );
+    this.body = yield readFileThunk( imgPath );
 });
 
-router.get('story', '/s/:folder_slug/:action', function*( next ){
+router.get('story', '/s/:folder_slug', function*( next ){
 
   var story = STORY_MAP[ this.params.folder_slug.toLowerCase()];
 
