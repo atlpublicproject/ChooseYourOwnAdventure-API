@@ -6,9 +6,10 @@ var Boom = require('boom');
 var fs = require('fs');
 var cors = require('koa-cors');
 var path = require('path');
+var config = require('./../config.json')
 
-
-const storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
+var storiesFolder = config.storiesPath;
+//'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
 
  
 var app = koa();

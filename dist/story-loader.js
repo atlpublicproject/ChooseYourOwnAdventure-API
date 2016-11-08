@@ -4,6 +4,8 @@ const fs = require("fs");
 const yaml = require("js-yaml");
 const _ = require("underscore");
 const path = require('path');
+var config = require('./../config.json');
+var storiesFolder = config.storiesPath;
 class StoryLoader {
     static LoadStories() {
         let loader = new _StoryLoader();
@@ -95,7 +97,6 @@ exports.StoryLoader = StoryLoader;
 class _StoryLoader {
     constructor() {
         this.stories = {};
-        this.storiesFolder = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
         console.log('Created Story Loader');
     }
     LoadAllStories() {
@@ -103,7 +104,7 @@ class _StoryLoader {
         let success = 0;
         let fail = 0;
         /*** class stories loader => method load stories */
-        let folders = fs.readdirSync(this.storiesFolder);
+        let folders = fs.readdirSync(storiesFolder);
         folders.forEach(folder => {
             if (folder != ".git" && folder != ".gitignore" && folder != "README.md") {
                 //storyFolderPaths.push(  file );
@@ -127,7 +128,7 @@ class _StoryLoader {
         let s = new objects_1.Story();
         // if error then skip story
         try {
-            var dirPath = (file) => { return path.join(this.storiesFolder, folder, file); };
+            var dirPath = (file) => { return path.join(storiesFolder, folder, file); };
             var metadata = dirPath('metadata.yaml');
             var pages = new Array();
             var i = 1;

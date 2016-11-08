@@ -5,7 +5,9 @@ import * as yaml from "js-yaml";
 import * as _ from "underscore";
 import * as path from 'path';
 import * as util from 'util';
+var config = require('./../config.json')
 
+var storiesFolder = config.storiesPath;
 
 export class StoryLoader {
 
@@ -125,8 +127,6 @@ class _StoryLoader {
 
     stories: { [slug: string]: Story } = {};
 
-    storiesFolder: string = 'F:\\PublicProjects\\ChooseYourOwnAdventure\\Stories';
-
     constructor() {
         console.log('Created Story Loader');
     }
@@ -139,7 +139,7 @@ class _StoryLoader {
         let success = 0;
         let fail = 0;
         /*** class stories loader => method load stories */
-        let folders = fs.readdirSync(this.storiesFolder);
+        let folders = fs.readdirSync(storiesFolder);
 
 
         folders.forEach(folder => {            
@@ -176,7 +176,7 @@ class _StoryLoader {
         // if error then skip story
         try {
 
-            var dirPath = (file : string) => { return path.join(this.storiesFolder, folder, file); };
+            var dirPath = (file : string) => { return path.join(storiesFolder, folder, file); };
 
             var metadata = dirPath('metadata.yaml');
 
@@ -259,10 +259,5 @@ class _StoryLoader {
 
         story.placeholders = placeholders;
     }
-
-    // AddCover(story : Story){
-    //     story.cover = StoryLoader.toHeader(story);
-    // }
-
 
 }
